@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:04:40 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/15 19:31:51 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/15 19:58:49 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,19 @@ int	my_usleep(t_element *element, long long int time)
 	return (1);
 }
 
-int	my_write(t_element *element, t_philo philo, char *str)
+int	my_write(t_element *element, t_philo philo, char *str, int ret)
 {
 	pthread_mutex_lock(&element->check_write);
 	if (check_alive(element) == 1 || str[0] == 'd')
 		printf("%lld\t%d\t%s\n", (get_time() - element->time_start),
 			philo.id, str);
+	else
+	{
+		pthread_mutex_unlock(&element->check_write);
+		return (-1);
+	}
 	pthread_mutex_unlock(&element->check_write);
-	return (1);
+	return (ret);
 }
 
 int	check_alive(t_element *element)

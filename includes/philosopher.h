@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:50:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/15 19:31:35 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/15 19:59:57 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,7 @@ t_element		my_parsage(int ac, char **av, t_element tmp);
 void			*my_routine_golder(void *data);
 void			*routine_philo(void *data);
 int				check_alive(t_element *element);
+int				my_write(t_element *element, t_philo philo,
+					char *str, int ret);
 
 #endif
