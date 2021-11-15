@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:50:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/15 17:47:11 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/15 19:31:35 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 typedef struct s_philo
 {
+	int					id;
 	long long int		time_last_eat;
 	pthread_mutex_t		check_last_eat;
 	long long int		nb_repas;
@@ -41,14 +42,15 @@ typedef struct s_element
 	t_philo			*philos;
 	pthread_mutex_t	check_write;
 	pthread_mutex_t	check_alive;
-	pthread_mutex_t	check_time_eat;
-	pthread_mutex_t	check_time_sleep;
-	pthread_mutex_t	check_time_start;
+	pthread_mutex_t	*forks;
 	pthread_t		gold;
 }	t_element;
 
 long long int	get_time(void);
-t_element	*my_create_element(t_element tmp);
-t_element	my_parsage(int ac, char **av, t_element tmp);
+t_element		*my_create_element(t_element tmp);
+t_element		my_parsage(int ac, char **av, t_element tmp);
+void			*my_routine_golder(void *data);
+void			*routine_philo(void *data);
+int				check_alive(t_element *element);
 
 #endif
