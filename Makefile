@@ -6,18 +6,19 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2021/11/15 19:17:37 by mbonnet          ###   ########.fr        #
+#    Updated: 2021/11/22 18:40:03 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	philosopher
 
 SRCS			=	main.c\
-					utile.c\
-					initialisation/my_init_element.c\
-					initialisation/my_parsage.c\
-					routine/routine_gold.c\
-					routine/routine_philos.c\
+					parse/my_parse.c\
+					init_philo_info/my_init_philo_info.c\
+					routine/my_routine.c\
+					routine/utile.c\
+					routine/my_action.c\
+					
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}
 

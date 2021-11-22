@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:50:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/15 19:59:57 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/22 18:45:53 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,40 +19,30 @@
 # include <pthread.h>
 # include "libft.h"
 
+typedef struct s_info
+{
+	int				nb_philo;
+	struct s_philo	*philos;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	check_write;
+}	t_info;
+
 typedef struct s_philo
 {
-	int					id;
-	long long int		time_last_eat;
-	pthread_mutex_t		check_last_eat;
-	long long int		nb_repas;
-	pthread_mutex_t		check_nb_repas;
-	struct s_element	*element;
-	pthread_t			th;
+	int				id;
+	int				alive;
+	pthread_t		th;
+	pthread_t		gold;
+	t_info			*info;
+	pthread_mutex_t	check_alive;
 }	t_philo;
 
-typedef struct s_element
-{
-	int				alive;
-	int				nb_philo;
-	long long int	time_start;
-	long long int	time_die;
-	long long int	time_eat;
-	long long int	time_sleep;
-	int				nb_repas;
-	t_philo			*philos;
-	pthread_mutex_t	check_write;
-	pthread_mutex_t	check_alive;
-	pthread_mutex_t	*forks;
-	pthread_t		gold;
-}	t_element;
-
-long long int	get_time(void);
-t_element		*my_create_element(t_element tmp);
-t_element		my_parsage(int ac, char **av, t_element tmp);
-void			*my_routine_golder(void *data);
-void			*routine_philo(void *data);
-int				check_alive(t_element *element);
-int				my_write(t_element *element, t_philo philo,
-					char *str, int ret);
+t_info	my_parse(int ac, char **av);
+int		my_init_philo_info(t_info *info);
+void	*my_routine(void *data);
+void	my_write(t_info *info, char *str, int id);
+int		check_alive(t_philo *philo);
+int		my_take_forks(t_philo *philo);
+int		my_pose_forks(t_philo *philo);
 
 #endif

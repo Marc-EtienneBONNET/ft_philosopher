@@ -1,37 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utile.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 17:58:32 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/22 18:09:27 by mbonnet          ###   ########.fr       */
+/*   Created: 2021/11/22 18:01:08 by mbonnet           #+#    #+#             */
+/*   Updated: 2021/11/22 18:22:32 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-int	main(int ac, char **av)
+void	my_write(t_info *info, char *str, int id)
 {
-	t_info	info;
-	int		i;
+	pthread_mutex_lock(&info->check_write);
+	printf("(%s),\tid : %d\n", str, id);
+	pthread_mutex_unlock(&info->check_write);
+}
 
-	i = 0;
-	info = my_parse(ac, av);
-	if (info.nb_philo == -1)
-		return (-1);
-	my_init_philo_info(&info);
-	while (info.nb_philo > i)
-	{
-		pthread_create(&(info.philos[i].th), NULL, my_routine,&info.philos[i]);
-		i++;
-	}
-	i = 0;
-	while (info.nb_philo > i)
-	{
-		pthread_join(info.philos[i].th, NULL);
-		i++;
-	}
-	return (0);
+int	check_alive(t_philo *philo)
+{
+	int	alive;
+
+	pthread_mutex_lock(&philo->check_alive);
+	alive = philo->alive;
+	pthread_mutex_unlock(&philo->check_alive);
+	return (alive);
 }
