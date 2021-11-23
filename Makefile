@@ -6,7 +6,7 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2021/11/22 18:40:03 by mbonnet          ###   ########.fr        #
+#    Updated: 2021/11/23 09:32:27 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRCS			=	main.c\
 					init_philo_info/my_init_philo_info.c\
 					routine/my_routine.c\
 					routine/utile.c\
-					routine/my_action.c\
+					routine/my_action_philo.c\
+					routine/my_action_gold.c\
 					
 
 OBJS			=	${addprefix srcs/,${SRCS:.c=.o}}

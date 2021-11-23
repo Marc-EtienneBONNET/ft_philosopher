@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:58:32 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/22 18:09:27 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 08:58:23 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int ac, char **av)
 	my_init_philo_info(&info);
 	while (info.nb_philo > i)
 	{
-		pthread_create(&(info.philos[i].th), NULL, my_routine,&info.philos[i]);
+		pthread_create(&(info.philos[i].th), NULL, my_routine, &info.philos[i]);
 		i++;
 	}
 	i = 0;

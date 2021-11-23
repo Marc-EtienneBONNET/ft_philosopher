@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:46:00 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/22 18:54:58 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 09:42:51 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ int		my_init_philo_info(t_info *info)
 
 	i = 0;
 	pthread_mutex_init(&info->check_write, NULL);
+	pthread_mutex_init(&info->check_alive, NULL);
+	info->alive = 1;
+	info->time_starte = get_time();
 	info->philos = malloc(sizeof(t_philo) * info->nb_philo);
 	info->forks = malloc(sizeof(t_philo) * info->nb_philo);
 	while (i < info->nb_philo)
@@ -25,7 +28,9 @@ int		my_init_philo_info(t_info *info)
 		info->philos[i].id = i;
 		info->philos[i].alive = 1;
 		info->philos[i].info = info;
+		info->philos[i].time_last_eat = info->time_starte;
 		pthread_mutex_init(&(info->philos[i].check_alive), NULL);
+		pthread_mutex_init(&(info->philos[i].check_last_eat), NULL);
 		i++;
 	}
 	i = 0;
