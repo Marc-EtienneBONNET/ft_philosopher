@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 15:53:53 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 17:10:00 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,18 @@ void	my_fork_write(t_philo *philo, int index)
 	pthread_mutex_unlock(&philo->info->check_write);
 }
 
-void	ft_take_one_forks(int index, t_philo *philo)
+int	ft_take_one_forks(int index, t_philo *philo)
 {
+	if (check_philo_alive(philo) == -1)
+		return (-1);
 	pthread_mutex_lock(&philo->info->forks[index]);
+	if (check_philo_alive(philo) == -1)
+	{
+		pthread_mutex_unlock(&philo->info->forks[index]);
+		return (-1);
+	}
 	my_fork_write(philo, index);
+	return (1);
 }
 
 int	my_take_forks(t_philo *philo)
@@ -38,13 +46,29 @@ int	my_take_forks(t_philo *philo)
 		index_right = 0;
 	if (philo->id % 2 == 0)
 	{
-		ft_take_one_forks(index_right, philo);
-		ft_take_one_forks(index_left, philo);
+		if (ft_take_one_forks(index_right, philo) == -1)
+			return (-1);
+		else
+		{
+			if (ft_take_one_forks(index_left, philo) == -1)
+			{
+				pthread_mutex_unlock(&philo->info->forks[index_right]);
+				return (-1);
+			}
+		}
 	}
 	else
 	{
-		ft_take_one_forks(index_left, philo);
-		ft_take_one_forks(index_right, philo);
+		if (ft_take_one_forks(index_left, philo) == -1)
+			return (-1);
+		else
+		{
+			if (ft_take_one_forks(index_right, philo) == -1)
+			{
+				pthread_mutex_unlock(&philo->info->forks[index_left]);
+				return (-1);
+			}
+		}
 	}
 	return (1);
 }
@@ -71,11 +95,13 @@ int	my_pose_forks(t_philo *philo)
 	return (1);
 }
 
-
 int	my_eat(t_philo *philo)
 {
 	if (check_philo_alive(philo) == -1)
+	{
+		my_pose_forks(philo);
 		return (-1);
+	}
 	my_write(philo, "is eating");
 	pthread_mutex_lock(&philo->check_last_eat);
 	philo->time_last_eat = get_time();
@@ -111,7 +137,7 @@ int	check_philo_alive(t_philo *philo)
 	return (1);
 }
 
-int		my_sleep_and_think(t_philo *philo)
+int	my_sleep_and_think(t_philo *philo)
 {
 	my_write(philo, "is sleeping");
 	if (my_usleep(philo, philo->info->time_sleep) == -1)

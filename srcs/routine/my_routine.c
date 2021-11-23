@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:57:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 15:59:28 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 16:53:33 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,21 @@ void	*my_routine_philo(void *data)
 		if (my_take_forks(philo) == -1)
 		{
 			my_write(philo, "\t\tsorti processe take fork");
-			return (data);
+			return (NULL);
 		}
 		if (my_eat(philo) == -1 || my_pose_forks(philo) == -1)
 		{
 			my_write(philo, "\t\tsorti processe my eat");
-			return (data);
+			return (NULL);
 		}
 		if (my_sleep_and_think(philo) == -1)
 		{
 			my_write(philo, "\t\tsorti processe sleep and think");
-			return (data);
+			return (NULL);
 		}
 	}
 	my_write(philo, "\t\tsorti processe");
-	return (data);
+	return (NULL);
 }
 
 void	*my_routine_golder(void *data)
