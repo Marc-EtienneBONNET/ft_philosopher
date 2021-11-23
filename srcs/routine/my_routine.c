@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:57:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 16:53:33 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 18:36:53 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 void	*my_routine_philo(void *data)
 {
 	t_philo	*philo;
+	int		alive;
 
 	philo = (t_philo *)data;
-	while (check_philo_alive(philo) != -1)
+	alive = 1;
+	while (alive != -1)
 	{
+		alive = check_philo_alive(philo);
 		if (my_take_forks(philo) == -1)
 		{
 			my_write(philo, "\t\tsorti processe take fork");
@@ -47,8 +50,16 @@ void	*my_routine_golder(void *data)
 	while (check_philo_alive(philo) != -1)
 	{
 		if (check_time_last_eat(philo) == -1)
-			break;
-		usleep(50);
+		{
+			my_died_shot(philo);
+			break ;
+		}
+		if (check_nb_eat(philo) == -1)
+		{
+			my_died_shot(philo);
+			break ;
+		}
+		usleep(100);
 	}
 	return (data);
 }

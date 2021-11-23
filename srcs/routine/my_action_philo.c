@@ -6,18 +6,11 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 17:10:00 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 18:39:20 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
-void	my_fork_write(t_philo *philo, int index)
-{
-	pthread_mutex_lock(&philo->info->check_write);
-	printf("%lld\tid : %d\t take fork number : %d\n", get_time() - philo->info->time_starte, philo->id, index);
-	pthread_mutex_unlock(&philo->info->check_write);
-}
 
 int	ft_take_one_forks(int index, t_philo *philo)
 {
@@ -29,7 +22,7 @@ int	ft_take_one_forks(int index, t_philo *philo)
 		pthread_mutex_unlock(&philo->info->forks[index]);
 		return (-1);
 	}
-	my_fork_write(philo, index);
+	my_write(philo, "take a fork");
 	return (1);
 }
 
@@ -106,6 +99,9 @@ int	my_eat(t_philo *philo)
 	pthread_mutex_lock(&philo->check_last_eat);
 	philo->time_last_eat = get_time();
 	pthread_mutex_unlock(&philo->check_last_eat);
+	pthread_mutex_lock(&philo->check_nb_eat);
+	philo->nb_eat++;
+	pthread_mutex_unlock(&philo->check_nb_eat);
 	if (my_usleep(philo, philo->info->time_eat) == -1)
 	{
 		my_pose_forks(philo);

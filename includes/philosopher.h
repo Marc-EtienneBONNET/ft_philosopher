@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:50:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 16:04:57 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 18:30:44 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_info
 {
 	int				alive;
 	int				nb_philo;
+	int				nb_eat;
 	long long int	time_starte;
 	long long int	time_eat;
 	long long int	time_sleep;
@@ -37,10 +38,12 @@ typedef struct s_philo
 {
 	int				id;
 	int				alive;
+	int				nb_eat;
 	long long int	time_last_eat;
 	pthread_t		th;
 	pthread_t		gold;
 	t_info			*info;
+	pthread_mutex_t	check_nb_eat;
 	pthread_mutex_t	check_last_eat;
 	pthread_mutex_t	check_alive;
 }	t_philo;
@@ -58,7 +61,8 @@ int				my_eat(t_philo *philo);
 int				check_philo_alive(t_philo *philo);
 void			my_write_alive(t_philo *philo);
 int				my_usleep(t_philo *philo, long long int time);
-void			my_write_2(t_philo *philo, char *str, long long int temps, long long int time);
 int				my_sleep_and_think(t_philo *philo);
+int				check_nb_eat(t_philo *philo);
+void			my_died_shot(t_philo *philo);
 
 #endif
