@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 11:40:50 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 15:24:19 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	my_write_2(t_philo *philo, char *str, long long int temps, long long int ti
 	printf("%lld\tid : %d\t(%s)\t%lld\t max : %lld\n",get_time() - philo->info->time_starte, philo->id, str, temps, time);
 	pthread_mutex_unlock(&philo->info->check_write);
 }
-
 
 int	check_time_last_eat(t_philo *philo)
 {

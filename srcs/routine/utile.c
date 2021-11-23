@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:01:08 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 11:44:22 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 15:44:59 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,18 @@ long long int	get_time(void)
 	gettimeofday(&time, NULL);
 	res = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (res);
+}
+
+int	my_usleep(t_philo *philo, long long int time)
+{
+	long long int	fin;
+
+	fin = get_time() + time;
+	while (fin > get_time())
+	{
+		usleep(100);
+		if (check_philo_alive(philo) == -1)
+			return (-1);
+	}
+	return (1);
 }

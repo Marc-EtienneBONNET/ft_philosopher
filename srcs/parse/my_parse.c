@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:33:47 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 09:35:52 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 15:50:00 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ t_info	my_parse(int ac, char **av)
 	}
 	info.nb_philo = atoi(av[1]);
 	info.time_die = atoi(av[2]);
+	info.time_eat = atoi(av[3]);
+	info.time_sleep = atoi(av[4]);
 	return (info);
 }

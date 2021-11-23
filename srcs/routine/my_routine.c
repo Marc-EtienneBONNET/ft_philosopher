@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:57:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 11:54:34 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 15:59:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,19 @@ void	*my_routine_philo(void *data)
 	{
 		if (my_take_forks(philo) == -1)
 		{
-			my_write(philo, "\t\tsorti processe");
+			my_write(philo, "\t\tsorti processe take fork");
 			return (data);
 		}
 		if (my_eat(philo) == -1 || my_pose_forks(philo) == -1)
+		{
+			my_write(philo, "\t\tsorti processe my eat");
 			return (data);
+		}
+		if (my_sleep_and_think(philo) == -1)
+		{
+			my_write(philo, "\t\tsorti processe sleep and think");
+			return (data);
+		}
 	}
 	my_write(philo, "\t\tsorti processe");
 	return (data);
@@ -40,10 +48,8 @@ void	*my_routine_golder(void *data)
 	{
 		if (check_time_last_eat(philo) == -1)
 			break;
-		usleep(1000);
+		usleep(50);
 	}
-	my_write_alive(philo);
-	my_write(philo, "\tarret du processe gold a cause d un mort");
 	return (data);
 }
 
@@ -52,7 +58,7 @@ void	*my_routine(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	pthread_create(&(philo->gold), NULL, my_routine_golder, philo);
+	pthread_create(&(philo->gold), NULL, my_routine_golder, data);
 	my_routine_philo(data);
 	pthread_join(philo->gold, NULL);
 	return (NULL);

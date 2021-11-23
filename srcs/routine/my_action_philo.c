@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 11:56:20 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 15:53:53 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,23 @@ int	my_pose_forks(t_philo *philo)
 		pthread_mutex_unlock(&philo->info->forks[index_left]);
 		pthread_mutex_unlock(&philo->info->forks[index_right]);
 	}
-	my_write(philo, "fourchettes posees");
 	return (1);
 }
 
 
-
-
-
-
-
 int	my_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->check_last_eat);
+	if (check_philo_alive(philo) == -1)
+		return (-1);
 	my_write(philo, "is eating");
+	pthread_mutex_lock(&philo->check_last_eat);
 	philo->time_last_eat = get_time();
 	pthread_mutex_unlock(&philo->check_last_eat);
-	usleep(100000);
-	//quand j aurais fais mon propre usleep, il faudra bien qu en cas d erreur il libere les deux fourchette !!
+	if (my_usleep(philo, philo->info->time_eat) == -1)
+	{
+		my_pose_forks(philo);
+		return (-1);
+	}
 	return (1);
 }
 
@@ -102,13 +101,21 @@ int	check_philo_alive(t_philo *philo)
 	pthread_mutex_unlock(&philo->info->check_alive);
 	if (philo_alive == -1)
 	{
-		my_write(philo, "\t\tcheck_alive renvoi -1 morth de ce philo");
+		my_write(philo,"\t\t\t\test mort");
 		return (-1);
 	}
 	else if (other_philo_alive == -1)
 	{
-		my_write(philo, "\tcheck_alive renvoi -1 morth d un des philo");
 		return (-1);
 	}
+	return (1);
+}
+
+int		my_sleep_and_think(t_philo *philo)
+{
+	my_write(philo, "is sleeping");
+	if (my_usleep(philo, philo->info->time_sleep) == -1)
+		return (-1);
+	my_write(philo, "is thinking");
 	return (1);
 }
