@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 10:03:05 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 11:40:50 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	check_time_last_eat(t_philo *philo)
 	pthread_mutex_lock(&philo->check_last_eat);
 	time_last_eat = philo->time_last_eat;
 	pthread_mutex_unlock(&philo->check_last_eat);
-	//my_write_2(philo, "test time : ", get_time() - time_last_eat, philo->info->time_die);
 	if ((get_time() - time_last_eat) > philo->info->time_die)
 	{
 		pthread_mutex_lock(&philo->check_alive);

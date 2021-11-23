@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:50:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 10:09:22 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/23 11:04:15 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ long long int	get_time(void);
 int				check_time_last_eat(t_philo *philo);
 int				my_eat(t_philo *philo);
 int				check_philo_alive(t_philo *philo);
+void			my_write_alive(t_philo *philo);
 
 #endif
