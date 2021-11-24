@@ -6,17 +6,32 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:33:47 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 17:59:43 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/24 14:53:50 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-t_info	my_parse(int ac, char **av)
+t_info	my_remplis_valeur(int ac, char **av)
 {
 	t_info	info;
+
+	info.nb_philo = atoi(av[1]);
+	info.time_die = atoi(av[2]);
+	info.time_eat = atoi(av[3]);
+	info.time_sleep = atoi(av[4]);
+	if (ac == 6)
+		info.nb_eat = atoi(av[5]);
+	else
+		info.nb_eat = -1;
+	return (info);
+}
+
+t_info	my_parse(int ac, char **av)
+{
 	int		i;
 	int		x;
+	t_info	info;
 
 	i = 0;
 	while (ac > ++i)
@@ -31,13 +46,5 @@ t_info	my_parse(int ac, char **av)
 			}
 		}
 	}
-	info.nb_philo = atoi(av[1]);
-	info.time_die = atoi(av[2]);
-	info.time_eat = atoi(av[3]);
-	info.time_sleep = atoi(av[4]);
-	if (ac == 6)
-		info.nb_eat = atoi(av[5]);
-	else
-		info.nb_eat = -1;
-	return (info);
+	return (my_remplis_valeur(ac, av));
 }

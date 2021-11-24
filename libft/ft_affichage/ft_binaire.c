@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 08:01:26 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/10/14 08:01:35 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/24 15:24:19 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_affichage_binaire(char c)
 	while (x <= 7)
 	{
 		bit = (c >> x++) & 1;
-		printf("(%d)", bit);	
+		printf("(%d)", bit);
 	}
 	printf("\n");
 }

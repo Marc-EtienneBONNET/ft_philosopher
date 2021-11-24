@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/24 12:27:46 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/24 15:22:04 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	my_take_forks(t_philo *philo)
 {
 	int	index_left;
 	int	index_right;
+	int	tmp;
 
 	index_left = philo->id;
 	index_right = philo->id + 1;
@@ -35,28 +36,18 @@ int	my_take_forks(t_philo *philo)
 		index_right = 0;
 	if (philo->id % 2 == 0)
 	{
-		if (ft_take_one_forks(index_right, philo) == -1)
-			return (-1);
-		else
-		{
-			if (ft_take_one_forks(index_left, philo) == -1)
-			{
-				pthread_mutex_unlock(&philo->info->forks[index_right]);
-				return (-1);
-			}
-		}
+		tmp = index_right;
+		index_right = index_left;
+		index_left = tmp;
 	}
+	if (ft_take_one_forks(index_left, philo) == -1)
+		return (-1);
 	else
 	{
-		if (ft_take_one_forks(index_left, philo) == -1)
-			return (-1);
-		else
+		if (ft_take_one_forks(index_right, philo) == -1)
 		{
-			if (ft_take_one_forks(index_right, philo) == -1)
-			{
-				pthread_mutex_unlock(&philo->info->forks[index_left]);
-				return (-1);
-			}
+			pthread_mutex_unlock(&philo->info->forks[index_left]);
+			return (-1);
 		}
 	}
 	return (1);
