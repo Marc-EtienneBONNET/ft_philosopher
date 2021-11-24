@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:57:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/24 11:12:25 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/24 12:24:40 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ void	*my_routine_philo(void *data)
 				return (my_write_died(philo));
 		}
 		if (my_sleep_and_think(philo) == -1)
+		{
 			return (my_write_died(philo));
+		}
 	}
 	return (my_write_died(philo));
 }

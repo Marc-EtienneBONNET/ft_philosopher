@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:50:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/24 11:04:03 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/24 12:27:36 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_philo
 t_info			my_parse(int ac, char **av);
 int				my_init_philo_info(t_info *info);
 void			*my_routine(void *data);
-void			my_write(t_philo *philo, char *str);
+int				my_write(t_philo *philo, char *str);
 int				check_alive(t_philo *philo);
 int				my_take_forks(t_philo *philo);
 int				my_pose_forks(t_philo *philo);
@@ -64,5 +64,7 @@ int				my_usleep(t_philo *philo, long long int time);
 int				my_sleep_and_think(t_philo *philo);
 void			my_died_shot(t_philo *philo);
 void			*my_routine_philo(void *data);
+int		my_write_2(t_philo *philo, char *str);
+int	my_choose_who_died(t_philo *philo);
 
 #endif
