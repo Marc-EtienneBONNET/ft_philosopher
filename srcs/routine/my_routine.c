@@ -6,68 +6,42 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:57:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/24 10:11:09 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/24 11:12:25 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
+void	*my_write_died(t_philo *philo)
+{
+	int	alive;
+
+	pthread_mutex_lock(&philo->check_alive);
+	alive = philo->alive;
+	pthread_mutex_unlock(&philo->check_alive);
+	if (alive == -1)
+		my_write(philo, "is died");
+	return (NULL);
+}
+
 void	*my_routine_philo(void *data)
 {
 	t_philo	*philo;
+	int		eat;
 
 	philo = (t_philo *)data;
 	while (check_philo_alive(philo) != -1)
 	{
 		if (my_take_forks(philo) == -1)
+			return (my_write_died(philo));
+		eat = my_eat(philo);
+		if (eat == -1 || eat == -2 || my_pose_forks(philo) == -1)
 		{
-			my_write(philo, "\t\tsorti processe take fork");
-			return (NULL);
-		}
-		if (my_eat(philo) == -1 || my_pose_forks(philo) == -1)
-		{
-			my_write(philo, "\t\tsorti processe my eat");
-			return (NULL);
+			if (eat != -2)
+				return (my_write_died(philo));
 		}
 		if (my_sleep_and_think(philo) == -1)
-		{
-			my_write(philo, "\t\tsorti processe sleep and think");
-			return (NULL);
-		}
+			return (my_write_died(philo));
 	}
-	my_write(philo, "\t\tsorti processe");
-	return (NULL);
-}
-
-void	*my_routine_golder(void *data)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)data;
-	while (check_philo_alive(philo) != -1)
-	{
-		if (check_time_last_eat(philo) == -1)
-		{
-			my_died_shot(philo);
-			break ;
-		}
-		if (check_nb_eat(philo) == -1)
-		{
-			my_died_shot(philo);
-			break ;
-		}
-		usleep(50);
-	}
-	return (data);
-}
-
-void	*my_routine(void *data)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)data;
-	pthread_create(&(philo->gold), NULL, my_routine_golder, data);
-	my_routine_philo(data);
-	pthread_join(philo->gold, NULL);
-	return (NULL);
+	return (my_write_died(philo));
 }

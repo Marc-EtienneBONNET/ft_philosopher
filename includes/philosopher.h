@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:50:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 18:30:44 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/24 11:04:03 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int				check_philo_alive(t_philo *philo);
 void			my_write_alive(t_philo *philo);
 int				my_usleep(t_philo *philo, long long int time);
 int				my_sleep_and_think(t_philo *philo);
-int				check_nb_eat(t_philo *philo);
 void			my_died_shot(t_philo *philo);
+void			*my_routine_philo(void *data);
 
 #endif
