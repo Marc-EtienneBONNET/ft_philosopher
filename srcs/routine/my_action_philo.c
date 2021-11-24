@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/23 18:46:38 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/24 10:09:24 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,24 +112,13 @@ int	my_eat(t_philo *philo)
 
 int	check_philo_alive(t_philo *philo)
 {
-	int	philo_alive;
 	int	other_philo_alive;
 
-	pthread_mutex_lock(&philo->check_alive);
-	philo_alive = philo->alive;
-	pthread_mutex_unlock(&philo->check_alive);
 	pthread_mutex_lock(&philo->info->check_alive);
 	other_philo_alive = philo->info->alive;
 	pthread_mutex_unlock(&philo->info->check_alive);
-	if (philo_alive == -1)
-	{
-		my_write(philo,"\t\t\t\test mort");
+	if (other_philo_alive == -1)
 		return (-1);
-	}
-	else if (other_philo_alive == -1)
-	{
-		return (-1);
-	}
 	return (1);
 }
 
