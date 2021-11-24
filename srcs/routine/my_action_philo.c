@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/24 15:22:04 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/24 15:41:08 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_take_one_forks(int index, t_philo *philo)
 		pthread_mutex_unlock(&philo->info->forks[index]);
 		return (-1);
 	}
-	my_write(philo, "take a fork");
+	my_write(philo, "has taken a fork");
 	return (1);
 }
 

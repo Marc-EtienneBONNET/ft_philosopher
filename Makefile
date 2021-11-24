@@ -6,11 +6,11 @@
 #    By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 15:14:49 by mbonnet           #+#    #+#              #
-#    Updated: 2021/11/24 15:06:41 by mbonnet          ###   ########.fr        #
+#    Updated: 2021/11/24 15:40:36 by mbonnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			=	philosopher
+NAME			=	philo
 
 SRCS			=	main.c\
 					parse/my_parse.c\

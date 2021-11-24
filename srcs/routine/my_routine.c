@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:57:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/24 12:24:40 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/24 15:41:44 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*my_write_died(t_philo *philo)
 	alive = philo->alive;
 	pthread_mutex_unlock(&philo->check_alive);
 	if (alive == -1)
-		my_write(philo, "is died");
+		my_write(philo, "died");
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:33:47 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/24 14:53:50 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/24 15:38:59 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ t_info	my_parse(int ac, char **av)
 	t_info	info;
 
 	i = 0;
+	if (ac != 5 && ac != 6)
+	{
+		info.nb_philo = -1;
+		return (info);
+	}
 	while (ac > ++i)
 	{
 		x = -1;

@@ -6,11 +6,22 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:58:32 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/24 15:14:14 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/24 15:53:42 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
+
+void	my_cas_particulier(t_info *info)
+{
+	int	time;
+
+	time = get_time() - info->time_starte;
+	printf("%d\t1\thas taken a fork\n", time);
+	while (time <= info->time_die)
+		time = get_time() - info->time_starte;
+	printf("%d\t1\tdied\n", time);
+}
 
 void	ft_fin_programe(t_info *info)
 {
@@ -67,6 +78,11 @@ int	main(int ac, char **av)
 	{
 		printf("ERREUR : init malloc/mutexs\n");
 		return (-1);
+	}
+	if (info.nb_philo == 1)
+	{
+		my_cas_particulier(&info);
+		return (0);
 	}
 	return (my_init_programe(&info));
 }
