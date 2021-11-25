@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:57:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/25 16:56:42 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/25 21:41:14 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,23 @@ void	*my_routine_philo(void *data)
 	while (check_philo_alive(philo) != -1)
 	{
 		if (my_take_forks(philo) == -1)
+		{
+			my_write(philo, "\t\tici");
 			return (my_write_died(philo));
+		}
 		if (my_eat(philo) == -1)
 		{
+			my_write(philo, "\t\tici");
 			return (my_write_died(philo));
 		}
 		if (my_pose_forks(philo) == -1)
 			return (my_write_died(philo));
 		if (my_sleep_and_think(philo) == -1)
 		{
+			my_write(philo, "\t\tici");
 			return (my_write_died(philo));
 		}
 	}
+	my_write(philo, "\t\tici");
 	return (my_write_died(philo));
 }

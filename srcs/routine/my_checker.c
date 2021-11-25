@@ -6,11 +6,20 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/25 17:38:56 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/25 21:44:04 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
+
+int	my_write_2(t_philo *philo, char *str)
+{
+	pthread_mutex_lock(&philo->info->check_write);
+	printf("%lld\t%d\t%s\n", get_time()
+		- philo->info->time_starte, philo->id + 1, str);
+	pthread_mutex_unlock(&philo->info->check_write);
+	return (1);
+}
 
 void	my_died_shot(t_philo *philo, int alive)
 {
@@ -20,6 +29,9 @@ void	my_died_shot(t_philo *philo, int alive)
 	pthread_mutex_lock(&philo->check_alive);
 	philo->alive = alive;
 	pthread_mutex_unlock(&philo->check_alive);
+	pthread_mutex_lock(&philo->info->check_alive);
+	philo->info->alive = -1;
+	pthread_mutex_unlock(&philo->info->check_alive);
 	while (i < philo->info->nb_philo)
 	{
 		pthread_mutex_lock(&philo->info->philos[i].check_alive);

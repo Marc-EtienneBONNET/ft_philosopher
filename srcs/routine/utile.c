@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:01:08 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/25 20:16:22 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/25 21:44:32 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 int	my_write(t_philo *philo, char *str)
 {
+	int alive;
+
 	pthread_mutex_lock(&philo->info->check_write);
-	if (str[0] != 'd' && check_philo_alive(philo) == -1)
+	pthread_mutex_lock(&philo->info->check_alive);
+	alive = philo->info->alive;
+	pthread_mutex_unlock(&philo->info->check_alive);
+	if (str[0] != 'd' && (check_philo_alive(philo) == -1 || alive == -1))
 	{
 		pthread_mutex_unlock(&philo->info->check_write);
 		return (-1);
