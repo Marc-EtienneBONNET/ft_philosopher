@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/25 17:07:29 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/25 17:38:56 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,27 @@ int	check_time_last_eat(t_info *info)
 {
 	long long int	time_last_eat;
 	int				i;
+	long long int	big_time;
+	long long int	time;
 
 	i = 0;
+	big_time = 0;
 	while (i < info->nb_philo)
 	{
 		pthread_mutex_lock(&(info->philos[i].check_last_eat));
 		time_last_eat = info->philos[i].time_last_eat;
 		pthread_mutex_unlock(&(info->philos[i].check_last_eat));
-		if ((get_time() - time_last_eat) > info->time_die)
+		time = get_time() - time_last_eat;
+		if (time > info->time_die)
 		{
 			my_died_shot(&info->philos[i], -1);
 			return (-1);
 		}
+		if (time > big_time)
+			big_time = time;
 		i++;
 	}
-	return (1);
+	return (time);
 }
 
 int	check_philo_alive(t_philo *philo)

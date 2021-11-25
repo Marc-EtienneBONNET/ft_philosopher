@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:58:32 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/25 17:30:07 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/25 17:50:59 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ void	*gold(void *data)
 {
 	t_info	*info;
 	int		i;
+	long long int time;
 
 	info = (t_info *)data;
 	i = 0;
 	while (i == 0)
 	{
-		if (check_time_last_eat(info) == -1)
+		time = check_time_last_eat(info);
+		if (time == -1)
 			return (NULL);
 		usleep(100);
 	}
