@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:58:32 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/24 15:53:42 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/25 17:30:07 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_fin_programe(t_info *info)
 	int	i;
 
 	i = 0;
+	pthread_join(info->god, NULL);
 	while (info->nb_philo > i)
 	{
 		pthread_join(info->philos[i].th, NULL);
@@ -35,6 +36,22 @@ void	ft_fin_programe(t_info *info)
 	}
 	free(info->forks);
 	free(info->philos);
+}
+
+void	*gold(void *data)
+{
+	t_info	*info;
+	int		i;
+
+	info = (t_info *)data;
+	i = 0;
+	while (i == 0)
+	{
+		if (check_time_last_eat(info) == -1)
+			return (NULL);
+		usleep(100);
+	}
+	return (NULL);
 }
 
 int	my_init_programe(t_info *info)
@@ -57,7 +74,10 @@ int	my_init_programe(t_info *info)
 			return (-1);
 		}
 		if (i == 0)
+		{
+			pthread_create(&(info->god), NULL, gold, info);
 			usleep(100);
+		}
 		i++;
 	}
 	ft_fin_programe(info);

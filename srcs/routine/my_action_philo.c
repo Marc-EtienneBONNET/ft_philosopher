@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/24 16:13:31 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/25 17:31:27 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	my_pose_forks(t_philo *philo)
 {
 	int	index_left;
 	int	index_right;
+	int	tmp;
 
 	index_left = philo->id;
 	index_right = philo->id + 1;
@@ -64,14 +65,12 @@ int	my_pose_forks(t_philo *philo)
 		index_right = 0;
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_unlock(&philo->info->forks[index_right]);
-		pthread_mutex_unlock(&philo->info->forks[index_left]);
+		tmp = index_right;
+		index_right = index_left;
+		index_left = tmp;
 	}
-	else
-	{
-		pthread_mutex_unlock(&philo->info->forks[index_left]);
-		pthread_mutex_unlock(&philo->info->forks[index_right]);
-	}
+	pthread_mutex_unlock(&philo->info->forks[index_right]);
+	pthread_mutex_unlock(&philo->info->forks[index_left]);
 	return (1);
 }
 
@@ -93,7 +92,8 @@ int	my_eat(t_philo *philo)
 	}
 	if (philo->info->nb_eat != -1 && checker_nb_repas >= philo->info->nb_eat)
 	{
-		return (my_choose_who_died(philo));
+		my_died_shot(philo, -2);
+		return (-1);
 	}
 	if (my_usleep(philo, philo->info->time_eat) == -1)
 	{
@@ -108,7 +108,6 @@ int	my_sleep_and_think(t_philo *philo)
 	if (my_write(philo, "is sleeping") == -1
 		|| my_usleep(philo, philo->info->time_sleep) == -1)
 	{
-		my_choose_who_died(philo);
 		return (-1);
 	}
 	my_write(philo, "is thinking");
