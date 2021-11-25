@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:58:32 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/25 17:50:59 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/25 20:25:57 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	my_init_programe(t_info *info)
 	i = 0;
 	while (info->nb_philo > i)
 	{
+		//printf("\t\tdebut de routine philo : %d\n", i +1 );
 		if (pthread_create(&(info->philos[i].th),
 				NULL, my_routine_philo, &info->philos[i]))
 		{
@@ -77,11 +78,12 @@ int	my_init_programe(t_info *info)
 		}
 		if (i == 0)
 		{
-			pthread_create(&(info->god), NULL, gold, info);
 			usleep(100);
 		}
 		i++;
 	}
+	if (check_philo_alive(&info->philos[0]) != -1)
+		pthread_create(&(info->god), NULL, gold, info);
 	ft_fin_programe(info);
 	return (0);
 }
