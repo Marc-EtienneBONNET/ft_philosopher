@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:58:32 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/25 20:49:05 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/26 11:05:27 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,40 @@ void	my_cas_particulier(t_info *info)
 	printf("%d\t1\tdied\n", time);
 }
 
-void	ft_fin_programe(t_info *info)
+int	ft_ferm_programe(t_info *info, int y)
 {
 	int	i;
+	int	x;
 
+	x = 0;
 	i = 0;
-	pthread_join(info->god, NULL);
-	while (info->nb_philo > i)
+	if (i == -1)
 	{
-		pthread_join(info->philos[i].th, NULL);
-		i++;
+		while (x <= i)
+			pthread_join(info->philos[x++].th, NULL);
+		free(info->forks);
+		free(info->philos);
+		printf("ERREUR : Creation des processe\n");
 	}
-	free(info->forks);
-	free(info->philos);
+	else
+	{
+		pthread_join(info->god, NULL);
+		while (info->nb_philo > i)
+		{
+			pthread_join(info->philos[i].th, NULL);
+			i++;
+		}
+		free(info->forks);
+		free(info->philos);
+	}
+	return (y);
 }
 
 void	*gold(void *data)
 {
-	t_info	*info;
-	int		i;
-	long long int time;
+	t_info			*info;
+	int				i;
+	long long int	time;
 
 	info = (t_info *)data;
 	i = 0;
@@ -59,32 +73,19 @@ void	*gold(void *data)
 int	my_init_programe(t_info *info)
 {
 	int	i;
-	int	x;
 
-	x = 0;
 	i = 0;
 	pthread_create(&(info->god), NULL, gold, info);
 	while (info->nb_philo > i)
 	{
-		//printf("%lld\t\tdebut de routine philo : %d\n", get_time() - info->time_starte, i +1);
 		if (pthread_create(&(info->philos[i].th),
 				NULL, my_routine_philo, &info->philos[i]))
-		{
-			while (x <= i)
-				pthread_join(info->philos[x++].th, NULL);
-			free(info->forks);
-			free(info->philos);
-			printf("ERREUR : Creation des processe\n");
-			return (-1);
-		}
+			return (ft_ferm_programe(info, -1));
 		if (i == 0)
-		{
 			usleep(100);
-		}
 		i++;
 	}
-	ft_fin_programe(info);
-	return (0);
+	return (ft_ferm_programe(info, 0));
 }
 
 int	main(int ac, char **av)

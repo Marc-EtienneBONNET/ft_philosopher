@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/25 20:43:25 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/26 11:11:28 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,20 +85,15 @@ int	my_eat(t_philo *philo)
 	checker_nb_repas = philo->nb_eat;
 	pthread_mutex_unlock(&philo->check_nb_eat);
 	if (my_write(philo, "is eating") == -1)
-	{
-		my_pose_forks(philo);
-		return (-1);
-	}
+		return (my_pose_forks(philo) * -1);
 	if (philo->info->nb_eat != -1 && checker_nb_repas >= philo->info->nb_eat)
 	{
 		my_died_shot(philo, -2);
+		my_write_2(philo, checker_nb_repas);
 		return (-1);
 	}
 	if (my_usleep(philo, philo->info->time_eat) == -1)
-	{
-		my_pose_forks(philo);
-		return (-1);
-	}
+		return (my_pose_forks(philo) * -1);
 	return (1);
 }
 
@@ -106,9 +101,7 @@ int	my_sleep_and_think(t_philo *philo)
 {
 	if (my_write(philo, "is sleeping") == -1
 		|| my_usleep(philo, philo->info->time_sleep) == -1)
-	{
 		return (-1);
-	}
 	my_write(philo, "is thinking");
 	return (1);
 }
