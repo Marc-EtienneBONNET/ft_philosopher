@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:01:08 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/26 10:21:52 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/29 11:47:43 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,27 @@ int	my_write(t_philo *philo, char *str)
 		pthread_mutex_unlock(&philo->info->check_write);
 		return (-1);
 	}
-	printf("%lld\t%d\t%s\n", get_time()
+	printf("%ld\t%d\t%s\n", get_time()
 		- philo->info->time_starte, philo->id + 1, str);
 	pthread_mutex_unlock(&philo->info->check_write);
 	return (1);
 }
 
-long long int	get_time(void)
+unsigned long	get_time(void)
 {
 	struct timeval	time;
-	long long int	res;
+	unsigned long	res;
 
 	gettimeofday(&time, NULL);
 	res = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (res);
 }
 
-int	my_usleep(t_philo *philo, long long int time)
+int	my_usleep(t_philo *philo, unsigned long time)
 {
-	long long int	fin;
+	unsigned long	fin;
 
 	fin = get_time() + time;
-	(void)philo;
 	while (fin > get_time())
 	{
 		usleep(100);

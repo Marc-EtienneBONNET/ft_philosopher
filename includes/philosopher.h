@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:50:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/26 10:29:57 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/29 11:01:04 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ typedef struct s_info
 	int				alive;
 	int				nb_philo;
 	int				nb_eat;
-	long long int	time_starte;
-	long long int	time_eat;
-	long long int	time_sleep;
-	long long int	time_die;
+	unsigned long	time_starte;
+	unsigned long	time_eat;
+	unsigned long	time_sleep;
+	unsigned long	time_die;
 	struct s_philo	*philos;
 	pthread_t		god;
 	pthread_mutex_t	*forks;
@@ -40,7 +40,7 @@ typedef struct s_philo
 	int				id;
 	int				alive;
 	int				nb_eat;
-	long long int	time_last_eat;
+	unsigned long	time_last_eat;
 	pthread_t		th;
 	t_info			*info;
 	pthread_mutex_t	check_nb_eat;
@@ -54,11 +54,11 @@ void			*my_routine(void *data);
 int				my_write(t_philo *philo, char *str);
 int				my_take_forks(t_philo *philo);
 int				my_pose_forks(t_philo *philo);
-long long int	get_time(void);
+unsigned long	get_time(void);
 int				check_time_last_eat(t_info *info);
 int				my_eat(t_philo *philo);
 int				check_philo_alive(t_philo *philo);
-int				my_usleep(t_philo *philo, long long int time);
+int				my_usleep(t_philo *philo, unsigned long time);
 int				my_sleep_and_think(t_philo *philo);
 void			my_died_shot(t_philo *philo, int alive);
 void			*my_routine_philo(void *data);

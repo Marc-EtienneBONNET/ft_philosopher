@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:58:32 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/26 11:05:27 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/29 11:49:20 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	my_cas_particulier(t_info *info)
 {
-	int	time;
+	unsigned long	time;
 
 	time = get_time() - info->time_starte;
-	printf("%d\t1\thas taken a fork\n", time);
+	printf("%ld\t1\thas taken a fork\n", time);
 	while (time <= info->time_die)
 		time = get_time() - info->time_starte;
-	printf("%d\t1\tdied\n", time);
+	printf("%ld\t1\tdied\n", time);
 }
 
 int	ft_ferm_programe(t_info *info, int y)
@@ -52,6 +52,18 @@ int	ft_ferm_programe(t_info *info, int y)
 	return (y);
 }
 
+int	my_usleep_2(unsigned long time)
+{
+	unsigned long	fin;
+
+	fin = get_time() + time;
+	while (fin > get_time())
+	{
+		usleep(10);
+	}
+	return (1);
+}
+
 void	*gold(void *data)
 {
 	t_info			*info;
@@ -65,7 +77,7 @@ void	*gold(void *data)
 		time = check_time_last_eat(info);
 		if (time == -1)
 			return (NULL);
-		usleep(100);
+		my_usleep_2(10);
 	}
 	return (NULL);
 }
@@ -75,16 +87,16 @@ int	my_init_programe(t_info *info)
 	int	i;
 
 	i = 0;
-	pthread_create(&(info->god), NULL, gold, info);
 	while (info->nb_philo > i)
 	{
 		if (pthread_create(&(info->philos[i].th),
 				NULL, my_routine_philo, &info->philos[i]))
 			return (ft_ferm_programe(info, -1));
 		if (i == 0)
-			usleep(100);
+			my_usleep_2(1);
 		i++;
 	}
+	pthread_create(&(info->god), NULL, gold, info);
 	return (ft_ferm_programe(info, 0));
 }
 
