@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:57:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/29 11:30:51 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/29 17:09:12 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ int	my_write_3(t_philo *philo, char *str)
 
 void	*my_routine_philo(void *data)
 {
+	int		all_philo;
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	//printf("%ld debus philo : %d\n",get_time() - philo->info->time_starte, philo->id + 1);
-	while (check_philo_alive(philo) != -1)
+	while (all_philo != -1)
 	{
+		all_philo = check_one_philo(philo);
 		if (my_take_forks(philo) == -1)
 			return (NULL);
 		if (my_eat(philo) == -1)

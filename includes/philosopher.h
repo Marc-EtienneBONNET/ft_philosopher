@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:50:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/29 11:01:04 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/29 17:09:24 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,15 @@ int				my_write(t_philo *philo, char *str);
 int				my_take_forks(t_philo *philo);
 int				my_pose_forks(t_philo *philo);
 unsigned long	get_time(void);
-int				check_time_last_eat(t_info *info);
+int				check_time_and_nb_eat(t_info *info);
 int				my_eat(t_philo *philo);
-int				check_philo_alive(t_philo *philo);
 int				my_usleep(t_philo *philo, unsigned long time);
 int				my_sleep_and_think(t_philo *philo);
-void			my_died_shot(t_philo *philo, int alive);
+void			my_died_shot(t_philo *philo);
 void			*my_routine_philo(void *data);
 int				my_choose_who_died(t_philo *philo);
 int				my_write_2(t_philo *philo, int nb);
+int				check_one_philo(t_philo *philo);
+int				check_all_philo(t_philo *philo);
+int				check_one_philo(t_philo *philo);
 #endif

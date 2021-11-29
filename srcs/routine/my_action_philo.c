@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/29 10:54:15 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/29 17:09:02 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 int	ft_take_one_forks(int index, t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->forks[index]);
-	if (my_write(philo, "has taken a fork") == -1)
+	if (check_one_philo(philo) == -1)
 	{
 		pthread_mutex_unlock(&philo->info->forks[index]);
 		return (-1);
 	}
+	my_write(philo, "has taken a fork");
 	return (1);
 }
 
@@ -84,8 +85,7 @@ int	my_eat(t_philo *philo)
 		philo->nb_eat++;
 		pthread_mutex_unlock(&philo->check_nb_eat);
 	}
-	if (my_write(philo, "is eating") == -1)
-		return (my_pose_forks(philo) * -1);
+	my_write(philo, "is eating");
 	if (my_usleep(philo, philo->info->time_eat) == -1)
 		return (my_pose_forks(philo) * -1);
 	return (1);
@@ -93,8 +93,8 @@ int	my_eat(t_philo *philo)
 
 int	my_sleep_and_think(t_philo *philo)
 {
-	if (my_write(philo, "is sleeping") == -1
-		|| my_usleep(philo, philo->info->time_sleep) == -1)
+	my_write(philo, "is sleeping");
+	if (my_usleep(philo, philo->info->time_sleep) == -1)
 		return (-1);
 	my_write(philo, "is thinking");
 	return (1);
