@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/29 17:09:02 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/29 18:27:38 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,10 @@ int	my_take_forks(t_philo *philo)
 	}
 	if (ft_take_one_forks(index_left, philo) == -1)
 		return (-1);
-	else
+	if (ft_take_one_forks(index_right, philo) == -1)
 	{
-		if (ft_take_one_forks(index_right, philo) == -1)
-		{
-			pthread_mutex_unlock(&philo->info->forks[index_left]);
-			return (-1);
-		}
+		pthread_mutex_unlock(&philo->info->forks[index_left]);
+		return (-1);
 	}
 	return (1);
 }
@@ -71,11 +68,14 @@ int	my_pose_forks(t_philo *philo)
 	}
 	pthread_mutex_unlock(&philo->info->forks[index_right]);
 	pthread_mutex_unlock(&philo->info->forks[index_left]);
+	my_write(philo, "libert fourchette");
 	return (1);
 }
 
 int	my_eat(t_philo *philo)
 {
+	if (check_one_philo(philo) == -1)
+		return (-1);
 	pthread_mutex_lock(&philo->check_last_eat);
 	philo->time_last_eat = get_time();
 	pthread_mutex_unlock(&philo->check_last_eat);
@@ -93,8 +93,12 @@ int	my_eat(t_philo *philo)
 
 int	my_sleep_and_think(t_philo *philo)
 {
+	if (check_one_philo(philo) == -1)
+		return (-1);
 	my_write(philo, "is sleeping");
 	if (my_usleep(philo, philo->info->time_sleep) == -1)
+		return (-1);
+	if (check_one_philo(philo) == -1)
 		return (-1);
 	my_write(philo, "is thinking");
 	return (1);
