@@ -6,20 +6,11 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/30 11:15:10 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/30 14:33:48 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
-int	my_write_2(t_philo *philo, char *str, int i)
-{
-	pthread_mutex_lock(&philo->info->check_write);
-	printf("%ld\t%d\t%s n %d\n", get_time()
-		- philo->info->time_starte, philo->id + 1, str, i);
-	pthread_mutex_unlock(&philo->info->check_write);
-	return (1);
-}
 
 int	ft_take_one_forks(int index, t_philo *philo)
 {
@@ -93,7 +84,7 @@ int	my_eat(t_philo *philo)
 		philo->nb_eat++;
 		pthread_mutex_unlock(&philo->check_nb_eat);
 	}
-	my_write(philo, "\t\tis eating");
+	my_write(philo, "is eating");
 	if (my_usleep(philo, philo->info->time_eat) == -1)
 		return (my_pose_forks(philo) * -1);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:58:32 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/30 11:11:55 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/30 14:33:27 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,6 @@ int	ft_ferm_programe(t_info *info, int y)
 	return (y);
 }
 
-int	my_usleep_2(unsigned long time)
-{
-	unsigned long	fin;
-
-	fin = get_time() + time;
-	while (fin > get_time())
-	{
-		usleep(10);
-	}
-	return (1);
-}
-
 void	*gold(void *data)
 {
 	t_info			*info;
@@ -77,7 +65,7 @@ void	*gold(void *data)
 		time = check_time_and_nb_eat(info);
 		if (time == -1)
 			return (NULL);
-		my_usleep_2(10);
+		my_usleep_2(time + 10);
 	}
 	return (NULL);
 }
@@ -95,7 +83,7 @@ int	my_init_programe(t_info *info)
 			return (ft_ferm_programe(info, -1));
 		if (i == 0)
 			my_usleep_2(1);
-		i +=2;
+		i += 2;
 	}
 	i = 1;
 	while (info->nb_philo > i)

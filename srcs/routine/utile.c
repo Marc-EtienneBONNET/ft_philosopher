@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:01:08 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/29 17:52:59 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/30 14:32:47 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,18 @@ int	my_usleep(t_philo *philo, unsigned long time)
 		usleep(10);
 		if (check_one_philo(philo) == -1)
 			return (-1);
+	}
+	return (1);
+}
+
+int	my_usleep_2(unsigned long time)
+{
+	unsigned long	fin;
+
+	fin = get_time() + time;
+	while (fin > get_time())
+	{
+		usleep(10);
 	}
 	return (1);
 }

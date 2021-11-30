@@ -6,13 +6,13 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/30 11:14:58 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/30 14:39:23 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	my_died_shot(t_philo *philo)
+int	my_died_shot(t_philo *philo)
 {
 	int	i;
 
@@ -24,15 +24,15 @@ void	my_died_shot(t_philo *philo)
 		pthread_mutex_unlock(&philo->info->philos[i].check_alive);
 		i++;
 	}
-	my_write(philo, "\t\tdied");
+	my_write(philo, "died");
+	return (-1);
 }
 
-void	ft_global_over_dose(t_philo *philo)
+int	ft_global_over_dose(t_philo *philo)
 {
 	int	i;
 
 	i = 0;
-	//printf("%ld j arrive ici !\n", get_time() - philo->info->time_starte);
 	while (i < philo->info->nb_philo)
 	{
 		pthread_mutex_lock(&philo->info->philos[i].check_alive);
@@ -41,6 +41,7 @@ void	ft_global_over_dose(t_philo *philo)
 		i++;
 	}
 	my_write(philo, "\t\tEach philo have eat enought");
+	return (-1);
 }
 
 int	check_nb_eat(t_philo *philo)
@@ -49,7 +50,6 @@ int	check_nb_eat(t_philo *philo)
 
 	if (philo->info->nb_eat == -1)
 		return (1);
-	//printf("%ld je passe ici  !\n", get_time() - philo->info->time_starte);
 	pthread_mutex_lock(&philo->check_nb_eat);
 	nb_eat = philo->nb_eat;
 	pthread_mutex_unlock(&philo->check_nb_eat);
@@ -67,34 +67,26 @@ int	check_time_and_nb_eat(t_info *info)
 	int				all_over_dose;
 
 	big_time = 0;
-	i = 0;
+	i = -1;
 	all_over_dose = 0;
-	while (i < info->nb_philo)
+	while (++i < info->nb_philo)
 	{
 		if (check_one_philo(&info->philos[i]) == -1)
 			return (-1);
 		if (check_nb_eat(&info->philos[i]) == -1)
 			all_over_dose++;
 		if (all_over_dose == info->nb_philo)
-		{
-			ft_global_over_dose(&info->philos[i]);
-			return (-1);
-		}
+			return (ft_global_over_dose(&info->philos[i]));
 		pthread_mutex_lock(&(info->philos[i].check_last_eat));
 		time_last_eat = info->philos[i].time_last_eat;
 		pthread_mutex_unlock(&(info->philos[i].check_last_eat));
 		time = get_time() - time_last_eat;
 		if ((unsigned long)time > info->time_die)
-		{
-			my_died_shot(&info->philos[i]);
-			return (-1);
-		}
+			return (my_died_shot(&info->philos[i]));
 		if ((unsigned long)time > big_time)
 			big_time = time;
-		i++;
 	}
-	time = info->time_die - big_time;
-	return (time);
+	return (info->time_die - big_time);
 }
 
 int	check_all_philo(t_philo *philo)
