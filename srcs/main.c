@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:58:32 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/30 14:33:27 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/30 15:41:18 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_ferm_programe(t_info *info, int y)
 
 	x = 0;
 	i = 0;
-	if (i == -1)
+	if (y == -1)
 	{
 		while (x <= i)
 			pthread_join(info->philos[x++].th, NULL);

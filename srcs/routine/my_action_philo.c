@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/30 14:33:48 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/30 15:46:10 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	my_pose_forks(t_philo *philo)
 int	my_eat(t_philo *philo)
 {
 	if (check_one_philo(philo) == -1)
-		return (-1);
+		return (my_pose_forks(philo) * -1);
 	pthread_mutex_lock(&philo->check_last_eat);
 	philo->time_last_eat = get_time();
 	pthread_mutex_unlock(&philo->check_last_eat);

@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:50:41 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/30 14:39:46 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/30 15:51:14 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_info
 	unsigned long	time_die;
 	struct s_philo	*philos;
 	pthread_t		god;
+	pthread_t		god_2;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	check_write;
 	pthread_mutex_t	check_alive;
@@ -66,4 +67,6 @@ int				check_one_philo(t_philo *philo);
 int				check_all_philo(t_philo *philo);
 int				check_one_philo(t_philo *philo);
 int				my_usleep_2(unsigned long time);
+void			*god_nb_eat(void *data);
+int				my_write_2(t_philo *philo, char *str);
 #endif

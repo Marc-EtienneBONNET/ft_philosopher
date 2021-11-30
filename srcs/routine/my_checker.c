@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/30 14:49:45 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/30 15:50:12 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_global_over_dose(t_philo *philo)
 		pthread_mutex_unlock(&philo->info->philos[i].check_alive);
 		i++;
 	}
-	my_write(philo, "\t\tEach philo have eat enought");
+	my_write_2(philo, "\t\tEach philo have eat enought");
 	return (-1);
 }
 

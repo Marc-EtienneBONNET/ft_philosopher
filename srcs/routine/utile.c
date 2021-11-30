@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:01:08 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/30 14:49:57 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/30 15:02:26 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 int	my_write(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(&philo->info->check_write);
-	printf("%ld\t%d\t%s\n", get_time()
-		- philo->info->time_starte, philo->id + 1, str);
+	if (str[0] == 'd' || str[0] == '\t' || check_one_philo(philo) == 1)
+		printf("%ld\t%d\t%s\n", get_time()
+			- philo->info->time_starte, philo->id + 1, str);
 	pthread_mutex_unlock(&philo->info->check_write);
 	return (1);
 }
