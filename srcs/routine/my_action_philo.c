@@ -6,11 +6,20 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 18:40:07 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/29 18:27:38 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/30 11:15:10 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
+
+int	my_write_2(t_philo *philo, char *str, int i)
+{
+	pthread_mutex_lock(&philo->info->check_write);
+	printf("%ld\t%d\t%s n %d\n", get_time()
+		- philo->info->time_starte, philo->id + 1, str, i);
+	pthread_mutex_unlock(&philo->info->check_write);
+	return (1);
+}
 
 int	ft_take_one_forks(int index, t_philo *philo)
 {
@@ -66,9 +75,8 @@ int	my_pose_forks(t_philo *philo)
 		index_right = index_left;
 		index_left = tmp;
 	}
-	pthread_mutex_unlock(&philo->info->forks[index_right]);
 	pthread_mutex_unlock(&philo->info->forks[index_left]);
-	my_write(philo, "libert fourchette");
+	pthread_mutex_unlock(&philo->info->forks[index_right]);
 	return (1);
 }
 
@@ -85,7 +93,7 @@ int	my_eat(t_philo *philo)
 		philo->nb_eat++;
 		pthread_mutex_unlock(&philo->check_nb_eat);
 	}
-	my_write(philo, "is eating");
+	my_write(philo, "\t\tis eating");
 	if (my_usleep(philo, philo->info->time_eat) == -1)
 		return (my_pose_forks(philo) * -1);
 	return (1);

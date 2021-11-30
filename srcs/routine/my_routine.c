@@ -6,7 +6,7 @@
 /*   By: mbonnet <mbonnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:57:21 by mbonnet           #+#    #+#             */
-/*   Updated: 2021/11/29 17:57:40 by mbonnet          ###   ########.fr       */
+/*   Updated: 2021/11/30 10:33:23 by mbonnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	*my_routine_philo(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
+	//printf("%ld debut du processe %d\n",get_time()- philo->info->time_starte, philo->id + 1);
 	while (one_philo != -1)
 	{
 		one_philo = check_one_philo(philo);
