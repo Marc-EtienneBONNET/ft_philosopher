@@ -1,0 +1,59 @@
+I) Problème
+
+	Plusieurs philosophes sont assis à une table ronde et font l'une des trois choses suivantes : manger, penser ou dormir.
+
+	Pendant qu'ils mangent, ils ne pensent ni ne dorment, pendant qu'ils dorment, ils ne mangent ni ne pensent et bien sûr, lorsqu'ils pensent, ils ne mangent ni ne dorment.
+
+	Les philosophes sont assis à une table circulaire avec un grand bol de spaghetti au centre. Il y a des fourchettes sur la table. Comme les spaghettis sont difficiles à servir et à manger avec une seule fourchette, on suppose qu'un philosophe doit manger avec deux fourchettes, une pour chaque main.
+
+
+II) Regle
+
+	Les philosophes ne doivent jamais mourir de faim. Tout philosophe a besoin de manger.
+
+	Les philosophes ne se parlent pas. Les philosophes ne savent pas quand un autre philosophe est sur le point de mourir.
+
+	Chaque fois qu'un philosophe aura fini de manger, il laissera tomber ses fourchettes et commencera à dormir. Quand un philosophe a fini de dormir, il commence à penser.
+
+	La simulation s'arrête lorsqu'un philosophe meurt.
+
+	Une fourche entre chaque philosophe, donc s'il y a plusieurs philosophes, il y aura une fourche à droite et à gauche de chaque philosophe.
+
+	Pour éviter que les philosophes dupliquent les forks, vous devez protéger l'état des forks avec un mutex pour chacun d'eux.
+
+	Chaque philosophe devrait être un fil conducteur.
+
+III) Notions
+
+	Decouverte et utilisation des multi-thread.
+	Decouverte et utilisation des Mutex.
+
+
+IV) Fonctions autorisées
+
+	usleep()
+	La fonction usleep() suspend l'exécution du thread appelant pendant (au moins) usec microsecondes.
+
+	gettimeofday()
+	La fonction gettimeofday() obtient l'heure de l'horloge du système. Le 2ème argument pointe vers la structure du fuseau horaire. Il doit normalement être défini sur NULL car la structure timezone est obsolète. Cet argument sert uniquement à la rétrocompatibilité.
+
+	pthread_create()
+	Créez un nouveau fil. Le premier argument est un pointeur vers thread_id qui est défini par cette fonction. Le deuxième argument spécifie les attributs. Si la valeur est NULL, les attributs par défaut doivent être utilisés. Le troisième argument est le nom de la fonction à exécuter pour le thread à créer. Le quatrième argument est utilisé pour passer des arguments à la fonction, myThreadFun.
+
+	pthread_detach()
+	ses ressources sont automatiquement restituées au système sans qu'il soit nécessaire qu'un autre thread se joigne au thread terminé
+
+	pthread_join()
+	La fonction pthread_join() pour les threads est l'équivalent de wait() pour les processus. Un appel à pthread_join bloque le thread appelant jusqu'à ce que le thread avec l'identifiant égal au premier argument se termine.
+
+	pthread_mutex_init()
+	Crée un mutex, référencé par mutex, avec des attributs spécifiés par attr. Si attr est NULL, l'attribut mutex par défaut (NONRCURSIVE) est utilisé. En cas de succès, pthread_mutex_init() renvoie 0 et l'état du mutex devient initialisé et déverrouillé.
+
+	pthread_mutex_destroy()
+	Détruire le mutex
+
+	pthread_mutex_lock()
+	Verrouille un objet mutex, qui identifie un mutex.
+
+	pthread_mutex_unlock()
+	Libère un objet mutex. Si un ou plusieurs threads attendent pour verrouiller le mutex
